@@ -16,9 +16,10 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).uri.path;
-    if (location.startsWith('/products')) return 1;
-    if (location.startsWith('/cart')) return 2;
-    if (location.startsWith('/account')) return 3;
+    if (location.startsWith('/category')) return 1;
+    if (location.startsWith('/blog')) return 2;
+    if (location.startsWith('/cart')) return 3;
+    if (location.startsWith('/account')) return 4;
     if (location == '/') return 0;
     return 0;
   }
@@ -29,12 +30,15 @@ class _MainLayoutState extends State<MainLayout> {
         context.go('/');
         break;
       case 1:
-        context.go('/products');
+        context.go('/category');
         break;
       case 2:
-        context.go('/cart');
+        context.go('/blog');
         break;
       case 3:
+        context.go('/cart');
+        break;
+      case 4:
         context.go('/account');
         break;
     }
@@ -55,15 +59,15 @@ class _MainLayoutState extends State<MainLayout> {
         actions: [
           IconButton(
             icon: const Icon(LucideIcons.search, color: AppColors.black),
-            onPressed: () {
-              // TODO: Open Search Modal
-            },
+            onPressed: () => context.go('/search'),
           ),
           IconButton(
-            icon: const Icon(LucideIcons.menu, color: AppColors.black),
-            onPressed: () {
-              // TODO: Open Menu Drawer
-            },
+            icon: const Icon(LucideIcons.heart, color: AppColors.black),
+            onPressed: () => context.go('/wishlist'),
+          ),
+          IconButton(
+            icon: const Icon(LucideIcons.shoppingCart, color: AppColors.black),
+            onPressed: () => context.go('/cart'),
           ),
         ],
       ),
@@ -98,8 +102,12 @@ class _MainLayoutState extends State<MainLayout> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(LucideIcons.search),
-              label: 'Search',
+              icon: Icon(LucideIcons.shoppingBag),
+              label: 'Shop',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(LucideIcons.bookOpen),
+              label: 'Blog',
             ),
             BottomNavigationBarItem(
               icon: Icon(LucideIcons.shoppingCart),
